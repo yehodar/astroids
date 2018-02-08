@@ -2,12 +2,73 @@
 
 var p; // shortcut to reference prototypes
 var lib={};var ss={};var img={};
+lib.webFontTxtInst = {}; 
+var loadedTypekitCount = 0;
+var loadedGoogleCount = 0;
+var gFontsUpdateCacheList = [];
+var tFontsUpdateCacheList = [];
 lib.ssMetadata = [
 		{name:"astoids_atlas_P_", frames: [[0,1114,306,238],[0,0,960,590],[1639,517,76,39],[1525,526,34,34],[962,475,203,64],[0,592,921,520],[1447,476,76,79],[1167,475,138,79],[1307,476,138,79],[962,541,202,48],[1525,476,112,48],[1639,476,106,39],[923,891,383,473],[962,0,395,473],[1359,0,388,474],[923,592,806,297],[1166,556,25,28],[1561,543,25,28],[1588,543,25,28],[1615,543,17,31],[1561,526,67,15]]},
-		{name:"astoids_atlas_NP_", frames: [[3842,156,239,154],[3842,0,239,154],[0,0,3840,590],[3370,592,239,154],[962,592,960,590],[2406,592,239,154],[2165,592,239,154],[2647,592,239,154],[3129,592,239,154],[2888,592,239,154],[3842,312,239,154],[0,592,960,590],[3842,468,239,154],[1924,592,239,154]]}
+		{name:"astoids_atlas_NP_", frames: [[3842,156,239,154],[3842,312,239,154],[0,0,3840,590],[3842,0,239,154],[0,592,960,590],[1924,592,239,154],[2165,592,239,154],[2647,592,239,154],[2888,592,239,154],[2406,592,239,154],[3842,468,239,154],[962,592,960,590],[3370,592,239,154],[3129,592,239,154]]}
 ];
 
 
+
+lib.updateListCache = function (cacheList) {		
+	for(var i = 0; i < cacheList.length; i++) {		
+		if(cacheList[i].cacheCanvas)		
+			cacheList[i].updateCache();		
+	}		
+};		
+
+lib.addElementsToCache = function (textInst, cacheList) {		
+	var cur = textInst;		
+	while(cur != null && cur != exportRoot) {		
+		if(cacheList.indexOf(cur) != -1)		
+			break;		
+		cur = cur.parent;		
+	}		
+	if(cur != exportRoot) {		
+		var cur2 = textInst;		
+		var index = cacheList.indexOf(cur);		
+		while(cur2 != null && cur2 != cur) {		
+			cacheList.splice(index, 0, cur2);		
+			cur2 = cur2.parent;		
+			index++;		
+		}		
+	}		
+	else {		
+		cur = textInst;		
+		while(cur != null && cur != exportRoot) {		
+			cacheList.push(cur);		
+			cur = cur.parent;		
+		}		
+	}		
+};		
+
+lib.gfontAvailable = function(family, totalGoogleCount) {		
+	lib.properties.webfonts[family] = true;		
+	var txtInst = lib.webFontTxtInst && lib.webFontTxtInst[family] || [];		
+	for(var f = 0; f < txtInst.length; ++f)		
+		lib.addElementsToCache(txtInst[f], gFontsUpdateCacheList);		
+
+	loadedGoogleCount++;		
+	if(loadedGoogleCount == totalGoogleCount) {		
+		lib.updateListCache(gFontsUpdateCacheList);		
+	}		
+};		
+
+lib.tfontAvailable = function(family, totalTypekitCount) {		
+	lib.properties.webfonts[family] = true;		
+	var txtInst = lib.webFontTxtInst && lib.webFontTxtInst[family] || [];		
+	for(var f = 0; f < txtInst.length; ++f)		
+		lib.addElementsToCache(txtInst[f], tFontsUpdateCacheList);		
+
+	loadedTypekitCount++;		
+	if(loadedTypekitCount == totalTypekitCount) {		
+		lib.updateListCache(tFontsUpdateCacheList);		
+	}		
+};
 // symbols:
 
 
@@ -1650,12 +1711,13 @@ lib.properties = {
 	fps: 24,
 	color: "#FFFFFF",
 	opacity: 1.00,
+	webfonts: {},
 	manifest: [
-		{src:"images/astoids_atlas_P_.png?1518115125622", id:"astoids_atlas_P_"},
-		{src:"images/astoids_atlas_NP_.jpg?1518115125623", id:"astoids_atlas_NP_"},
-		{src:"sounds/endgamemp3.mp3?1518115125664", id:"endgamemp3"},
-		{src:"sounds/falsemp3.mp3?1518115125664", id:"falsemp3"},
-		{src:"sounds/truemp3.mp3?1518115125664", id:"truemp3"}
+		{src:"images/astoids_atlas_P_.png", id:"astoids_atlas_P_"},
+		{src:"images/astoids_atlas_NP_.jpg", id:"astoids_atlas_NP_"},
+		{src:"sounds/endgamemp3.mp3", id:"endgamemp3"},
+		{src:"sounds/falsemp3.mp3", id:"falsemp3"},
+		{src:"sounds/truemp3.mp3", id:"truemp3"}
 	],
 	preloads: []
 };
