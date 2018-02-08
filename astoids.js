@@ -8,8 +8,8 @@ var loadedGoogleCount = 0;
 var gFontsUpdateCacheList = [];
 var tFontsUpdateCacheList = [];
 lib.ssMetadata = [
-		{name:"astoids_atlas_P_", frames: [[0,1114,306,238],[0,0,960,590],[1639,517,76,39],[1525,526,34,34],[962,475,203,64],[0,592,921,520],[1447,476,76,79],[1307,476,138,79],[1167,475,138,79],[962,541,202,48],[1525,476,112,48],[1639,476,106,39],[923,891,383,473],[962,0,395,473],[1359,0,388,474],[923,592,806,297],[1166,556,25,28],[1561,543,25,28],[1588,543,25,28],[1615,543,17,31],[1561,526,67,15]]},
-		{name:"astoids_atlas_NP_", frames: [[3842,0,239,154],[3842,156,239,154],[0,0,3840,590],[1924,592,239,154],[0,592,960,590],[3842,312,239,154],[3842,468,239,154],[2647,592,239,154],[3129,592,239,154],[2888,592,239,154],[3370,592,239,154],[962,592,960,590],[2165,592,239,154],[2406,592,239,154]]}
+		{name:"astoids_atlas_P_", frames: [[0,1114,306,238],[0,0,960,590],[1639,517,76,39],[1525,526,34,34],[962,475,203,64],[0,592,921,520],[1447,476,76,79],[1167,475,138,79],[1307,476,138,79],[962,541,202,48],[1525,476,112,48],[1639,476,106,39],[923,891,383,473],[962,0,395,473],[1359,0,388,474],[923,592,806,297],[1166,556,25,28],[1561,543,25,28],[1588,543,25,28],[1615,543,17,31],[1561,526,67,15]]},
+		{name:"astoids_atlas_NP_", frames: [[3842,156,239,154],[1924,592,239,154],[0,0,3840,590],[3842,468,239,154],[0,592,960,590],[3842,0,239,154],[2165,592,239,154],[2406,592,239,154],[3842,312,239,154],[2647,592,239,154],[2888,592,239,154],[962,592,960,590],[3370,592,239,154],[3129,592,239,154]]}
 ];
 
 
@@ -881,14 +881,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 		var lastitem = 0;
 		
 		//הפעלת סאונד
-		init();
 		
-		
-		function init() {
-			createjs.Sound.registerSound("/sounds/_false.mp3", "false");
-			createjs.Sound.registerSound("/sounds/_true.mp3", "true");
-			createjs.Sound.registerSound("/sounds/endgame.mp3", "endgame");
-		}
 		
 		
 		//הפעלת הממשק 
@@ -1430,7 +1423,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 		
 			//לחיצה על תשובה נכונה
 			if (items[gameindex][1][nextitem] == 1) {
-				var instance = createjs.Sound.play("true");
+				createjs.Sound.play("true_sound");
 				//הקטנת האסטרואיד בעזרת הטיקר
 				astroscalechange = 0.02;
 				//העלמת התוכן
@@ -1456,8 +1449,9 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 			}
 			//לחיצה על תשובה שגויה
 			else {
+				createjs.Sound.play("false_sound");
 				isclicked = true;
-				var instance = createjs.Sound.play("false");
+				
 				//מעבר שבתאי למצב עצוב
 				stage.getChildByName("shabtay").gotoAndStop(2);
 				//מעלה באחד את מד הטעויות
@@ -1489,7 +1483,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 		
 		//פונקצית סיום המשחק
 		function endscreenfunc() {
-			var instance = createjs.Sound.play("endgame");
+			createjs.Sound.play("endgame_sound");
 			//אפשור הובר
 			var frequency = 3;
 			stage.enableMouseOver(frequency);
@@ -1686,7 +1680,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 		
 		
 		}
-		playSound("truemp3");
+		playSound("true_sound");
 	}
 
 	// actions tween:
@@ -1706,9 +1700,9 @@ lib.properties = {
 	manifest: [
 		{src:"images/astoids_atlas_P_.png", id:"astoids_atlas_P_"},
 		{src:"images/astoids_atlas_NP_.jpg", id:"astoids_atlas_NP_"},
-		{src:"sounds/endgamemp3.mp3", id:"endgamemp3"},
-		{src:"sounds/falsemp3.mp3", id:"falsemp3"},
-		{src:"sounds/truemp3.mp3", id:"truemp3"}
+		{src:"sounds/endgame_sound.mp3", id:"endgame_sound"},
+		{src:"sounds/false_sound.mp3", id:"false_sound"},
+		{src:"sounds/true_sound.mp3", id:"true_sound"}
 	],
 	preloads: []
 };
