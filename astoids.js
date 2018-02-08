@@ -8,8 +8,8 @@ var loadedGoogleCount = 0;
 var gFontsUpdateCacheList = [];
 var tFontsUpdateCacheList = [];
 lib.ssMetadata = [
-		{name:"astoids_atlas_P_", frames: [[0,1114,306,238],[0,0,960,590],[1639,517,76,39],[1525,526,34,34],[962,475,203,64],[0,592,921,520],[1447,476,76,79],[1167,475,138,79],[1307,476,138,79],[962,541,202,48],[1525,476,112,48],[1639,476,106,39],[923,891,383,473],[962,0,395,473],[1359,0,388,474],[923,592,806,297],[1166,556,25,28],[1561,543,25,28],[1588,543,25,28],[1615,543,17,31],[1561,526,67,15]]},
-		{name:"astoids_atlas_NP_", frames: [[3842,156,239,154],[3842,312,239,154],[0,0,3840,590],[3842,0,239,154],[0,592,960,590],[1924,592,239,154],[2165,592,239,154],[2647,592,239,154],[2888,592,239,154],[2406,592,239,154],[3842,468,239,154],[962,592,960,590],[3370,592,239,154],[3129,592,239,154]]}
+		{name:"astoids_atlas_P_", frames: [[0,1114,306,238],[0,0,960,590],[1639,517,76,39],[1525,526,34,34],[962,475,203,64],[0,592,921,520],[1447,476,76,79],[1307,476,138,79],[1167,475,138,79],[962,541,202,48],[1525,476,112,48],[1639,476,106,39],[923,891,383,473],[962,0,395,473],[1359,0,388,474],[923,592,806,297],[1166,556,25,28],[1561,543,25,28],[1588,543,25,28],[1615,543,17,31],[1561,526,67,15]]},
+		{name:"astoids_atlas_NP_", frames: [[3842,0,239,154],[3842,156,239,154],[0,0,3840,590],[1924,592,239,154],[0,592,960,590],[3842,312,239,154],[3842,468,239,154],[2647,592,239,154],[3129,592,239,154],[2888,592,239,154],[3370,592,239,154],[962,592,960,590],[2165,592,239,154],[2406,592,239,154]]}
 ];
 
 
@@ -884,21 +884,12 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 		init();
 		
 		
-		
-		function init() { // שישמש בהמשך לקריאת הסאונד לבמה בעת הצלחה או אי הצלחה idסאונד במשחק ומתן 
-			createjs.Sound.registerSound({
-				id: "false",
-				src: "/sounds/_false.mp3"
-			});
-			createjs.Sound.registerSound({
-				id: "true",
-				src: "/sounds/_true.mp3"
-			});
-			createjs.Sound.registerSound({
-				id: "endgame",
-				src: "/sounds/endgame.mp3"
-			});
+		function init() {
+			createjs.Sound.registerSound("/sounds/_false.mp3", "false");
+			createjs.Sound.registerSound("/sounds/_true.mp3", "true");
+			createjs.Sound.registerSound("/sounds/endgame.mp3", "endgame");
 		}
+		
 		
 		//הפעלת הממשק 
 		startscreenfunc();
@@ -1004,7 +995,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 			// הוספת רקע שמיים
 			var background = new lib.big_background();
 			background.x = 0;
-			background.name="background";
+			background.name = "background";
 			stage.addChild(background);
 		
 			//הוספת שבתאי
@@ -1037,13 +1028,13 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 			txt3.y = 510;
 			stage.addChild(txt3);
 		
-			
+		
 			//הוספת מד מהירות
 			var speedbar_txt = new lib.speedbar_txt();
 			speedbar_txt.x = 660;
 			speedbar_txt.y = 510;
 			stage.addChild(speedbar_txt);
-			
+		
 			//כפתור מד מהירות 1 - איטי
 			var speedbar_btn1 = new lib.speedbar_btn1();
 			speedbar_btn1.x = 655;
@@ -1193,7 +1184,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 				pause_btn.shadow = null;
 			});
 		
-		//סוף כפתור השהייה
+			//סוף כפתור השהייה
 		
 			//הוספת בר התקדמות
 			var progressback = new lib.progressbar_background();
@@ -1271,8 +1262,8 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 				if (stage.getChildByName("background").x < -2850) {
 					stage.getChildByName("background").x = 0;
 				}
-					
-				
+		
+		
 				//ספירת זמן
 				if (isplay == true) {
 					gametime++;
@@ -1297,7 +1288,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 		
 				//הגדרת האירועים שקורים כשפריט יוצא מהפריים בצד שמאל
 				//כלומר פריט שגוי שנלחץ או פריט שלא נלחץ בכלל
-				
+		
 				if (stage.getChildByName("astroid").x < -260) {
 					//איפוס משתנה שינוי גודל אסטרואיד
 					astroscalechange = 0;
@@ -1562,7 +1553,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 			endgamebtn.addEventListener("mouseout", function endgamebtn_out() {
 				endgamebtn.shadow = null;
 			});
-			
+		
 			//כפתור שחק שוב
 			var playagainbtn = new lib.playagain_btn();
 			playagainbtn.x = 520;
@@ -1582,7 +1573,7 @@ p.nominalBounds = new cjs.Rectangle(-120,-77,239,154);
 			playagainbtn.addEventListener("mouseout", function playagainbtn_out() {
 				playagainbtn.shadow = null;
 			});
-			
+		
 			//הסבר הכוכביות האדומות
 			var reddottxt = new createjs.Text("", "9pt Arial", "#FF0000");
 			reddottxt.x = 930;
